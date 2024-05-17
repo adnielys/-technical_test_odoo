@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_custom_res_partner_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <field name="facebook_url"/>
+                    <field name="linkedin_url"/>
+                    <field name="twitter_url"/>
+                    <field name="full_profile"/>
+               </field>
+            </field>
+        </record>
+
+        <record id="view_custom_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button">
+                        <field name="full_profile" invisible="1"/>
+                        <i class="o_button_icon fa fa-fw fa-check-square-o" invisible="not full_profile"/>
+                        <i class="o_button_icon fa fa-fw fa-square-o" invisible="full_profile"/>
+
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text" invisible="not full_profile">
+                                Profile complete
+                            </span>
+                            <span class="o_stat_text" invisible="full_profile">
+                                Profile incomplete
+                            </span>
+                        </div>
+                    </button>
+                </div>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="social_medias" string="Social Medias">
+                        <group string="Social media" name="social_media">
+                            <group>
+                                <i class="fa fa-facebook-square" style="font-size:30px"/>
+                                <field name="facebook_url" nolabel="1"
+                                       placeholder="e.g. https://www.facebook.com/john_doe"/>
+                                <i class="fa fa-linkedin-square" style="font-size:30px"/>
+                                <field name="linkedin_url" nolabel="1"
+                                       placeholder="e.g. https://www.linkedin.com/in/john_doe"/>
+                                <i class="fa fa-twitter-square" style="font-size:30px"/>
+                                <field name="twitter_url" nolabel="1"
+                                       placeholder="e.g. https://www.twiter.com/john_doe"/>
+                            </group>
+
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="view_custom_res_partner_kanban" model="ir.ui.view">
+            <field name="name">res.partner.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="facebook_url"/>
+                    <field name="linkedin_url"/>
+                    <field name="twitter_url"/>
+                    <field name="full_profile"/>
+               </field>
+                <xpath expr="//ul" position="inside">
+                   <li t-if="record.full_profile.raw_value"> <i class="o_button_icon fa fa-fw fa-check-square-o"/>Profile complete</li>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_custom_res_partner_search" model="ir.ui.view">
+            <field name="name">res.partner.select.custom</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+<!--                <field name="user_id" position="after">-->
+<!--                    <field name="full_profile"/>-->
+<!--                </field>-->
+                <filter name="type_company" position="after">
+                     <filter string="Profile incomplete" name="type_full_profile" domain="[('full_profile','=',False)]"/>
+               </filter>
+            </field>
+        </record>
+
+    </data>
+</odoo>

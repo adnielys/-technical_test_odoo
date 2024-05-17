@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="customer_search" name="Customer search box">
+        <form action="/customer-list" class="o_searchbar_form s_searchbar_input me-auto flex-grow-1">
+            <t t-call="website.website_search_box">
+                <t t-set="action" t-value="'/customer-list'"/>
+            </t>
+        </form>
+    </template>
+    <template id="website_customer_list" name="Partner List">
+        <t t-call="website.layout">
+            <div class="container o_website_listing_layout">
+                <section class="s_searchbar o_colored_level o_cc pt48 pb48">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2">
+                            <div class="btn-toolbar">
+                                <t t-call="crm_social_media.customer_search"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <div class="oe_structure oe_new"/>
+                <div class="row mx-n2 mt8 o_website_list">
+                    <t t-foreach="partners" t-as="partner">
+
+                        <div class="card card-body mb-3 border shadow-sm">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    <t t-esc="partner.name"/>
+                                </h5>
+                                <div class="d-flex gap-2">
+                                    <t t-if="partner.mobile">
+                                        <a t-attf-href="tel:{{ partner.mobile }}" target="blank"
+                                           class="text-decoration-none text-muted">
+                                            <i class="fa fa-mobile"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="partner.email">
+                                        <a t-attf-href="mailto:{{partner.email}}" target="blank"
+                                           class="text-decoration-none text-muted">
+                                            <i class="fa fa-envelope"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="partner.facebook_url">
+                                        <a t-attf-href="{{partner.facebook_url}}" target="blank"
+                                           class="text-decoration-none text-muted">
+                                            <i class="fa fa-facebook-square"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="partner.linkedin_url">
+                                        <a t-attf-href="{{partner.linkedin_url}}" target="blank"
+                                           class="text-decoration-none text-muted">
+                                            <i class="fa fa-linkedin-square"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="partner.twitter_url">
+                                        <a t-attf-href="{{partner.twitter_url}}" target="blank"
+                                           class="text-decoration-none text-muted">
+                                            <i class="fa fa-twitter-square"/>
+                                        </a>
+                                    </t>
+
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <div class="oe_structure oe_new"/>
+                <div t-if="pager" class="o_portal_pager d-flex justify-content-center mt-3">
+                    <t t-call="website.pager"/>
+                </div>
+            </div>
+        </t>
+    </template>
+    <record id="menu_customer_list" model="website.menu">
+        <field name="name">Customer</field>
+        <field name="url">/customer-list</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">20</field>
+    </record>
+</odoo>
+
