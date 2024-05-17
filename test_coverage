@@ -1,0 +1,16 @@
+Report on test coverage
+1-Test Coverage Summary:
+•	Model Field Creation:
+o	The test successfully creates a res.partner record with populated social media URLs for Facebook, LinkedIn, and Twitter.
+•	Field Value Validation:
+o	The test asserts that the created record's facebook_url, linkedin_url, and twitter_url fields have the expected values you provided during record creation.
+•	Field Data Type Verification:
+o	The test checks that the data types of the social media fields are strings (str). This ensures that the code enforces the appropriate data type for these fields.
+
+
+2-Test Coverage Summary:
+•	Website Page Rendering:
+o	The test simulates a website request to render the website_customer_list template from the crm_social_media module.
+o	It provides a search term ('partner2') that might be used to filter the customer list on the page.
+o	The test verifies that the response status code is 200, indicating a successful page rendering.
+
