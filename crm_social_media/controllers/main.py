@@ -10,7 +10,6 @@ class WebsiteCustomer(http.Controller):
         domain = []
         if search:
             search_terms = search.split(" ")
-            # OR operator for searching across different fields
             domain = ['|', '|', '|']
             for term in search_terms:
                 domain.append(('name', 'ilike', term))
